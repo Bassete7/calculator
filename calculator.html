@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+
+<style>
+    *,
+    ::before,
+    ::after{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    body{
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        background-color: #633ff4;
+    }
+    .container{
+        width: 400px;
+        padding: 1rem;
+        border: 1px solid rgb(232, 231, 231);
+        border-radius: 7px;
+        box-shadow: 0 0 10px rgba(131, 129, 129, 0.2);
+        display: grid;
+        gap: .5rem;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+        grid-template-areas:
+            "text text text text"
+            "plus minus times divide"
+            "btn7 btn8 btn9 equals"
+            "btn4 btn5 btn6 equals"
+            "btn1 btn2 btn3 equals"
+            "btn0 comma clear de";
+    }
+    .container #text{
+        padding-inline: 1rem;
+        line-height: 3.5rem;
+        height: 3.5rem;
+        font-size: 1rem;
+        text-align: right;
+        border: 1px rgb(205, 200, 200) solid;
+        grid-area: text;
+        background-color: #fff;
+    }
+    #text:focus{
+        outline: 1px solid rgb(11, 10, 10);
+    }
+    .add-btn,
+    .subtract-btn,
+    .multiply-btn,
+    .divide-btn{
+        background-color: rgba(174, 173, 173, 0.805);
+    }
+    .container .btn{
+        width: 80px;
+        padding: .4rem;
+        font-family: inherit;
+        font-size: 1.4rem;
+        border: 1px solid rgb(205, 200, 200);
+        border: none;
+        cursor: pointer;
+    }
+    .container .btn:active{
+        transform: translateY(1px);
+    }
+
+    .container .btn0{
+        grid-area: btn0;
+    }
+    .container .btn1{
+        grid-area: btn1;
+    }
+    .container .btn2{
+        grid-area: btn2;
+    }
+    .container .btn3{
+        grid-area: btn3;
+    }
+    .container .btn4{
+        grid-area: btn4;
+    }
+    .container .btn5{
+        grid-area: btn5;
+    }
+    .container .btn6{
+        grid-area: btn6;
+    }
+    .container .btn7{
+        grid-area: btn7;
+    }
+    .container .btn8{
+        grid-area: btn8;
+    }
+    .container .btn9{
+        grid-area: btn9;
+    }
+
+    .container .btn-comma{
+        grid-area: comma;
+    }
+    .container .btn-clear{
+        grid-area: clear;
+    }
+    .container .btn-equals{
+        grid-area: equals;
+        background-color: rgb(31, 131, 246);
+        color: white;
+    }
+    .container .btn-DE{
+        grid-area: de;
+    }
+</style>
+
+<body>
+    <section>
+        <div class="container">
+            <!-- <input type="text" name="text" id="text"> -->
+            <div id="text"></div>
+            <button class="btn add-btn" value="+">+</button>
+            <button class="btn subtract-btn" value="-">-</button>
+            <button class="btn multiply-btn" value="*">x</button>
+            <button class="btn divide-btn" value="/">/</button>
+            
+            <button class="btn btn0" value="0">0</button>
+            <button class="btn btn1" value="1">1</button>
+            <button class="btn btn2" value="2">2</button>
+            <button class="btn btn3" value="3">3</button>
+            <button class="btn btn4" value="4">4</button>
+            <button class="btn btn5" value="5">5</button>
+            <button class="btn btn6" value="6">6</button>
+            <button class="btn btn7" value="7">7</button>
+            <button class="btn btn8" value="8">8</button>
+            <button class="btn btn9" value="9">9</button>
+
+            <button class="btn btn-comma" value=".">.</button>
+            <button class="btn btn-clear" value="C">C</button>
+            <button class="btn btn-DE" value="DE">DE</button>
+
+            <button class="btn btn-equals" value="=">=</button>
+        </div>
+    </section>
+
+    <script>
+        let btns = document.querySelectorAll('.btn');
+        let display = document.querySelector('#text');
+
+        let isDisplayed = false;
+
+        btns.forEach(btn =>{
+            btn.addEventListener('click', ()=>{
+                if(isDisplayed){
+                    display.textContent = '';
+                    isDisplayed = false;
+                }
+
+                if(btn.value === 'C')
+                    display.textContent = '';
+
+                else if(btn.value === '='){
+                    try{
+                        eval(display.textContent);
+                        display.textContent = eval(display.textContent);
+                    }
+                    catch{
+                        display.textContent = 'Error';
+                    }
+
+                    isDisplayed = true;
+                }
+                else if(btn.value === 'DE')
+                    display.textContent = display.textContent.slice(0, display.textContent.length-1);
+
+                else
+                    display.textContent += btn.value;
+                    
+            })
+        })
+
+
+    </script>
+</body>
+</html>
